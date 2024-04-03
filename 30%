@@ -6,6 +6,7 @@ void startGame();
 void displayHighscores();
 void displayInstructions();
 void displayAuthors();
+void showLoadingScreen();
 
 int main() {
     int choice;
@@ -24,6 +25,7 @@ int main() {
         // Process user choice
         switch (choice) {
             case 1:
+                showLoadingScreen();
                 startGame();
                 break;
             case 2:
@@ -69,4 +71,34 @@ void displayInstructions() {
 void displayAuthors() {
     printf("Displaying authors...\n");
     // Implement authors display logic here
+}
+
+void showLoadingScreen() {
+    printf("Loading...\n");
+    // Simulate loading with a loading bar using a while loop
+    const int totalProgress = 50; // Total length of loading bar
+    int progress = 0;
+    while (progress < totalProgress) {
+        // Update progress
+        progress += rand() % 5; // Simulate progress increment
+        if (progress > totalProgress) // Ensure progress doesn't exceed total length
+            progress = totalProgress;
+        printf("[");
+        int i = 0;
+        while (i < totalProgress) {
+            if (i < progress)
+                printf("=");
+            else
+                printf(" ");
+            ++i;
+        }
+        printf("] %d%%\r", (progress * 100) / totalProgress);
+        fflush(stdout); // Flush output buffer to display the loading bar immediately
+        // Simulate delay
+        volatile long long int j = 0;
+        while (j < 10000000) {
+            ++j;
+        }
+    }
+    printf("\nLoading complete!\n");
 }
